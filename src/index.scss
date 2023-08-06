@@ -1,5 +1,4 @@
 @import 'nullstyle.scss';
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 body {
   margin: 0;
@@ -71,5 +70,18 @@ header {
       align-items: center;
       column-gap: 10px;
     }
+  }
+}
+
+.content {
+  padding: 40px;
+
+  h1 {
+    color: #000;
+    font-family: Inter;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
   }
 }
