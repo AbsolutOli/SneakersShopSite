@@ -76,15 +76,43 @@ header {
 .content {
   padding: 40px;
 
-  h1 {
-    color: #000;
-    font-family: Inter;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
+  .search-sneakers-block {
     margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+
+    h1 {
+      color: #000;
+      font-family: Inter;
+      font-size: 32px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+
+    div {
+      border-radius: 10px;
+      border: 1px solid #F3F3F3;
+      padding: 15px 18px;
+      display: flex;
+      gap: 13.75px;
+      align-items: center;
+
+      input {
+        color: #000;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+
+        &::placeholder {
+          color: #C4C4C4;
+        }
+      }
+    }
   }
+
+
 
   .sneakers {
     display: flex;
