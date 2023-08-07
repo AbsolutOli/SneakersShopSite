@@ -83,5 +83,82 @@ header {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    margin-bottom: 40px;
+  }
+
+  .sneakers {
+    display: flex;
+    column-gap: 40px;
+    justify-content: space-between;
+  }
+
+  .card {
+    padding: 20px 29px 34px 29px;
+    width: 210px;
+    height: 260px;
+    border-radius: 40px;
+    border: 1px solid #F3F3F3;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+
+    .sneakers-images {
+      position: relative;
+
+      svg {
+        position: absolute;
+        top: 9px;
+        left: 0;
+      }
+    }
+
+    p {
+      color: #000;
+      font-family: Inter;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+
+    .sneakers-price {
+      display: flex;
+      justify-content: space-between;
+      align-self: stretch;
+      align-items: center;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        span {
+          color: #BDBDBD;
+          font-family: Inter;
+          font-size: 11px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+          text-transform: uppercase;
+        }
+
+        b {
+          color: #000;
+          font-family: Inter;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+        }
+      }
+
+      button {
+        background-color: transparent;
+        border: none;
+        outline: none;
+      }
+    }
   }
 }
