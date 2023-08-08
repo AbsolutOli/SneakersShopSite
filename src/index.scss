@@ -73,6 +73,26 @@ header {
   }
 }
 
+.closeBtn {
+  background-color: transparent;
+  display: block;
+
+  &:hover {
+    svg {
+      rect {
+        fill: #FEF0F0;
+        stroke: #FF8585;
+        transition: all 0.3s ease;
+      }
+
+      path {
+        fill: #FF8585;
+        transition: all 0.3s ease;
+      }
+    }
+  }
+}
+
 .side-panel {
   position: absolute;
   top: 0;
@@ -94,14 +114,22 @@ header {
     display: flex;
     flex-direction: column;
 
-    h3 {
-      color: #000;
-      font-size: 24px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: normal;
+    .side-panel-head {
       margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h3 {
+        color: #000;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+
+      }
     }
+
 
     .cart-items {
       flex: 1 1 auto;
@@ -151,26 +179,6 @@ header {
             line-height: normal;
           }
         }
-
-        button {
-          background-color: transparent;
-          display: block;
-
-          &:hover {
-            svg {
-              rect {
-                fill: #FEF0F0;
-                stroke: #FF8585;
-                transition: all 0.3s ease;
-              }
-
-              path {
-                fill: #FF8585;
-                transition: all 0.3s ease;
-              }
-            }
-          }
-        }
       }
     }
 
@@ -207,25 +215,29 @@ header {
       }
     }
 
-    .btnOrder {
+    .GreenBtn {
       border-radius: 18px;
       background: #9DD458;
       padding: 10px 34px;
       height: 55px;
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
       transition: all 0.3s ease;
 
       &:hover {
         background: #86b74b;
+
+        .btnContent img {
+          left: 50px;
+        }
       }
 
       .btnContent {
         display: flex;
         text-align: center;
         align-items: center;
-        column-gap: 50px;
+        justify-content: center;
 
         p {
           color: #FFF;
@@ -233,6 +245,13 @@ header {
           font-style: normal;
           font-weight: 600;
           line-height: normal;
+        }
+
+        img {
+          position: relative;
+          left: 40px;
+
+          transition: all 0.2s ease-in-out;
         }
       }
     }
