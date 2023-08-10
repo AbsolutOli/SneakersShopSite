@@ -1,3 +1,4 @@
+import React from 'react';
 import Card from './components/Card';
 import SidePanel from './components/SidePanel';
 import Header from './components/Header';
@@ -10,10 +11,12 @@ const cardsArr = [
 ]
 
 function App() {
-  return <div className="wrapper">
-    <SidePanel />
+  const [cartState, setCartState] = React.useState(false);
 
-    <Header />
+  return <div className="wrapper">
+    {cartState && <SidePanel onClose={() => setCartState(false)} />}
+
+    <Header onCartClick={() => setCartState(true)} />
 
     <div className="content">
 
