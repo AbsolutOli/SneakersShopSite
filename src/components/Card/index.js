@@ -1,6 +1,9 @@
+import styles from './Card.module.scss';
+console.log(styles);
+
 function Card(props) {
-    return <div className="card">
-        <div className="sneakers-images">
+    return <div className={styles.card}>
+        <div className={styles.sneakers_images}>
             <img width={133} height={112} src={props.image} alt="Sneakers 1" />
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" fill="white" stroke="#F8F8F8" />
@@ -8,7 +11,7 @@ function Card(props) {
             </svg>
         </div>
         <p>{props.title}</p>
-        <div className="sneakers-price">
+        <div className={styles.sneakers_price}>
             <div>
                 <span>Цена:</span>
                 <b>{props.price} грн.</b>
