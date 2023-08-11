@@ -5,6 +5,7 @@ import Header from './components/Header';
 
 function App() {
   const [cardsArr, setCardsArr] = React.useState([]);
+  const [cartCardsArr, setCartCardsArr] = React.useState([]);
   React.useEffect(() => {
     fetch('https://64d608f7754d3e0f13617faa.mockapi.io/items')
       .then((res) => res.json())
@@ -13,8 +14,12 @@ function App() {
 
   const [cartState, setCartState] = React.useState(false);
 
+  const onAddToCart = (obj) => {
+    setCartCardsArr((prev) => [...prev, obj]);
+  }
+
   return <div className="wrapper">
-    {cartState && <SidePanel onClose={() => setCartState(false)} />}
+    {cartState && <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} />}
 
     <Header onCartClick={() => setCartState(true)} />
 
@@ -30,7 +35,7 @@ function App() {
 
       <div className="sneakers">
         {cardsArr.map((card) => (
-          <Card image={card.image} title={card.title} price={card.price} />
+          <Card image={card.image} title={card.title} price={card.price} onPlus={(obj) => onAddToCart(obj)} />
         ))}
       </div>
 
