@@ -3,14 +3,14 @@ import Card from './components/Card';
 import SidePanel from './components/SidePanel';
 import Header from './components/Header';
 
-const cardsArr = [
-  { image: "/img/sneakers/1.jpg", title: "Мужские Кроссовки Nike Blazer Mid Suede", price: "5199.60" },
-  { image: "/img/sneakers/2.jpg", title: "Мужские Кроссовки Nike Air Max 270", price: "5199.60" },
-  { image: "/img/sneakers/3.jpg", title: "Мужские Кроссовки Nike Blazer Mid Suede", price: "3399.60" },
-  { image: "/img/sneakers/4.jpg", title: "Кроссовки Puma X Aka Boku Future Rider", price: "3599.60" },
-]
-
 function App() {
+  const [cardsArr, setCardsArr] = React.useState([]);
+  React.useEffect(() => {
+    fetch('https://64d608f7754d3e0f13617faa.mockapi.io/items')
+      .then((res) => res.json())
+      .then((json => setCardsArr(json)));
+  }, [])
+
   const [cartState, setCartState] = React.useState(false);
 
   return <div className="wrapper">

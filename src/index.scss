@@ -70,6 +70,10 @@ header {
       align-items: center;
       column-gap: 10px;
     }
+
+    li:first-child>* {
+      cursor: pointer;
+    }
   }
 }
 
@@ -300,6 +304,8 @@ header {
   .sneakers {
     display: flex;
     column-gap: 40px;
-    justify-content: space-between;
+    row-gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 }
