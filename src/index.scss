@@ -286,6 +286,11 @@ header {
       display: flex;
       gap: 13.75px;
       align-items: center;
+      position: relative;
+
+      button {
+        background-color: transparent;
+      }
 
       input {
         color: #000;
