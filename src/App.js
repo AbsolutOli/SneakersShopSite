@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import Card from './components/Card';
 import SidePanel from './components/SidePanel';
 import Header from './components/Header';
@@ -9,9 +10,9 @@ function App() {
   const [searchValue, setSearcValue] = React.useState('');
 
   React.useEffect(() => {
-    fetch('https://64d608f7754d3e0f13617faa.mockapi.io/items')
-      .then((res) => res.json())
-      .then((json => setCardsArr(json)));
+    axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/items').then((res) => {
+      setCardsArr(res.data);
+    })
   }, [])
 
   const [cartState, setCartState] = React.useState(false);
@@ -25,12 +26,12 @@ function App() {
   }
 
   return <div className="wrapper">
-    {cartState && <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} />}
+
 
     <Header onCartClick={() => setCartState(true)} />
+    {cartState && <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} />}
 
     <div className="content">
-
       <div className="search-sneakers-block">
         <h1>{searchValue ? `Результат поиска "${searchValue}"` : "Все кроссовки"}</h1>
         <div>
@@ -46,6 +47,7 @@ function App() {
       </div>
 
     </div>
+
   </div>;
 }
 
