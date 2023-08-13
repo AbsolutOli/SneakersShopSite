@@ -13,11 +13,20 @@ function App() {
     axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/items').then((res) => {
       setCardsArr(res.data);
     })
+    axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/cart').then((res) => {
+      setCartCardsArr(res.data);
+    })
   }, [])
+
+  const onRemoveItems = (id) => {
+    axios.delete(`https://64d608f7754d3e0f13617faa.mockapi.io/cart/${id}`);
+    setCartCardsArr((prev) => prev.filter(item => item.id !== id));
+  }
 
   const [cartState, setCartState] = React.useState(false);
 
   const onAddToCart = (obj) => {
+    axios.post('https://64d608f7754d3e0f13617faa.mockapi.io/cart', obj);
     setCartCardsArr((prev) => [...prev, obj]);
   }
 
@@ -29,7 +38,7 @@ function App() {
 
 
     <Header onCartClick={() => setCartState(true)} />
-    {cartState && <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} />}
+    {cartState && <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} onRemove={onRemoveItems} />}
 
     <div className="content">
       <div className="search-sneakers-block">
