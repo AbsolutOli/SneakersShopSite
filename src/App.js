@@ -7,7 +7,9 @@ import Header from './components/Header';
 function App() {
   const [cardsArr, setCardsArr] = React.useState([]);
   const [cartCardsArr, setCartCardsArr] = React.useState([]);
+  const [likedCardsArr, setLikedCardsArr] = React.useState([]);
   const [searchValue, setSearcValue] = React.useState('');
+  const [cartState, setCartState] = React.useState(false);
 
   React.useEffect(() => {
     axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/items').then((res) => {
@@ -18,12 +20,15 @@ function App() {
     })
   }, [])
 
+  const onAddToLiked = (obj) => {
+    axios.post('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite', obj)
+    setLikedCardsArr((prev) => [...prev, obj]);
+  }
+
   const onRemoveItems = (id) => {
     axios.delete(`https://64d608f7754d3e0f13617faa.mockapi.io/cart/${id}`);
     setCartCardsArr((prev) => prev.filter(item => item.id !== id));
   }
-
-  const [cartState, setCartState] = React.useState(false);
 
   const onAddToCart = (obj) => {
     axios.post('https://64d608f7754d3e0f13617faa.mockapi.io/cart', obj);
@@ -51,7 +56,7 @@ function App() {
 
       <div className="sneakers">
         {cardsArr.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase())).map((card, index) => (
-          <Card key={index} image={card.image} title={card.title} price={card.price} onPlus={(obj) => onAddToCart(obj)} />
+          <Card key={index} image={card.image} title={card.title} price={card.price} onPlus={(obj) => onAddToCart(obj)} onLike={(obj) => onAddToLiked(obj)} />
         ))}
       </div>
 
