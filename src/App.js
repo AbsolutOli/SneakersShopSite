@@ -1,8 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import Card from './components/Card';
+import { Route, Routes } from 'react-router-dom'
 import SidePanel from './components/SidePanel';
 import Header from './components/Header';
+import Home from './pages/Home';
+import Favorite from './pages/Favorite';
 
 function App() {
   const [cardsArr, setCardsArr] = React.useState([]);
@@ -10,6 +12,8 @@ function App() {
   const [likedCardsArr, setLikedCardsArr] = React.useState([]);
   const [searchValue, setSearcValue] = React.useState('');
   const [cartState, setCartState] = React.useState(false);
+  // console.log(cardsArr)
+  // console.log(likedCardsArr)
 
   React.useEffect(() => {
     axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/items').then((res) => {
@@ -18,11 +22,25 @@ function App() {
     axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/cart').then((res) => {
       setCartCardsArr(res.data);
     })
+    axios.get('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite').then((res) => {
+      setLikedCardsArr(res.data);
+    })
+
   }, [])
 
-  const onAddToLiked = (obj) => {
-    axios.post('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite', obj)
-    setLikedCardsArr((prev) => [...prev, obj]);
+  const onAddToLiked = async (obj) => {
+    try {
+      if (likedCardsArr.find((card) => card.id === obj.id)) {
+        axios.delete(`https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite/${obj.id}`);
+        //setLikedCardsArr((prev) => prev.filter((card) => card.id !== obj.id));
+      } else {
+        const { data } = await axios.post('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite', obj);
+        setLikedCardsArr((prev) => [...prev, data]);
+      }
+    } catch {
+      alert('Не удалось добавить в фавориты');
+    }
+
   }
 
   const onRemoveItems = (id) => {
@@ -45,23 +63,14 @@ function App() {
     <Header onCartClick={() => setCartState(true)} />
     {cartState && <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} onRemove={onRemoveItems} />}
 
-    <div className="content">
-      <div className="search-sneakers-block">
-        <h1>{searchValue ? `Результат поиска "${searchValue}"` : "Все кроссовки"}</h1>
-        <div>
-          {searchValue ? <button onClick={() => (setSearcValue(''))}><img width={16} height={16} src="/img/cross.svg" alt="Close" /></button> : <img src="/img/search.svg" alt="Search Icon" />}
-          <input onChange={onChangeInputValue} placeholder="Поиск..." value={searchValue} />
-        </div>
-      </div>
-
-      <div className="sneakers">
-        {cardsArr.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase())).map((card, index) => (
-          <Card key={index} image={card.image} title={card.title} price={card.price} onPlus={(obj) => onAddToCart(obj)} onLike={(obj) => onAddToLiked(obj)} />
-        ))}
-      </div>
-
-    </div>
-
+    <Routes>
+      <Route path="/" element={
+        <Home searchValue={searchValue} setSearcValue={setSearcValue} onChangeInputValue={onChangeInputValue} cardsArr={cardsArr} onAddToCart={onAddToCart} onAddToLiked={(obj) => onAddToLiked(obj)} />
+      } />
+      <Route path="/favorites" element={
+        <Favorite item={likedCardsArr} onAddToLiked={onAddToLiked} />
+      } />
+    </Routes>
   </div>;
 }
 
