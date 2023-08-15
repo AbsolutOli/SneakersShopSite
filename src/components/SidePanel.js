@@ -14,7 +14,7 @@ function SidePanel({ onClose, items = [], onRemove }) {
                 <div className="full_cart">
                     <div className="cart-items">
                         {items.map((obj) => (
-                            <div className="cart-item" >
+                            <div key={obj.id} className="cart-item" >
                                 <div className="cart-item-image">
                                     <img src={obj.image} alt="Sneakers 1" />
                                 </div>

@@ -1,6 +1,6 @@
 import Card from '../components/Card';
 
-function Home({ searchValue, setSearcValue, onChangeInputValue, cardsArr, onAddToCart, onAddToLiked }) {
+function Home({ searchValue, setSearcValue, onChangeInputValue, cardsArr, onAddToCart, onAddToLiked, cartCardsArr }) {
     return <div className="content">
         <div className="search-sneakers-block">
             <h1>{searchValue ? `Результат поиска "${searchValue}"` : "Все кроссовки"}</h1>
@@ -12,7 +12,7 @@ function Home({ searchValue, setSearcValue, onChangeInputValue, cardsArr, onAddT
 
         <div className="sneakers">
             {cardsArr.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase())).map((card, index) => (
-                <Card key={index} onPlus={(obj) => onAddToCart(obj)} onLike={(obj) => onAddToLiked(obj)} {...card} />
+                <Card key={index} onPlus={(obj) => onAddToCart(obj)} onLike={(obj) => onAddToLiked(obj)} {...card} cartCardsArr={cartCardsArr} added={cartCardsArr.some((obj) => obj.id === card.id)} />
             ))}
         </div>
 

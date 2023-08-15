@@ -12,19 +12,21 @@ function App() {
   const [likedCardsArr, setLikedCardsArr] = React.useState([]);
   const [searchValue, setSearcValue] = React.useState('');
   const [cartState, setCartState] = React.useState(false);
-  // console.log(cardsArr)
-  // console.log(likedCardsArr)
 
   React.useEffect(() => {
-    axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/items').then((res) => {
-      setCardsArr(res.data);
-    })
-    axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/cart').then((res) => {
-      setCartCardsArr(res.data);
-    })
-    axios.get('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite').then((res) => {
-      setLikedCardsArr(res.data);
-    })
+
+    async function getResponse() {
+
+      const cartCards = await axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/cart');
+      const likedCards = await axios.get('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite');
+      const cards = await axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/items');
+
+      setCardsArr(cards.data);
+      setCartCardsArr(cartCards.data);
+      setLikedCardsArr(likedCards.data);
+    }
+
+    getResponse();
 
   }, [])
 
@@ -32,7 +34,7 @@ function App() {
     try {
       if (likedCardsArr.find((card) => card.id === obj.id)) {
         axios.delete(`https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite/${obj.id}`);
-        //setLikedCardsArr((prev) => prev.filter((card) => card.id !== obj.id));
+        setLikedCardsArr((prev) => prev.filter((card) => card.id !== obj.id));
       } else {
         const { data } = await axios.post('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite', obj);
         setLikedCardsArr((prev) => [...prev, data]);
@@ -40,7 +42,6 @@ function App() {
     } catch {
       alert('Не удалось добавить в фавориты');
     }
-
   }
 
   const onRemoveItems = (id) => {
@@ -48,9 +49,20 @@ function App() {
     setCartCardsArr((prev) => prev.filter(item => item.id !== id));
   }
 
-  const onAddToCart = (obj) => {
-    axios.post('https://64d608f7754d3e0f13617faa.mockapi.io/cart', obj);
-    setCartCardsArr((prev) => [...prev, obj]);
+  const onAddToCart = async (obj) => {
+    try {
+      console.log(obj)
+      if (cartCardsArr.find((card) => Number(card.id) === Number(obj.id))) {
+        axios.delete(`https://64d608f7754d3e0f13617faa.mockapi.io/cart/${obj.id}`);
+        setCartCardsArr((prev) => prev.filter((card) => card.id !== obj.id));
+      } else {
+        const { data } = await axios.post('https://64d608f7754d3e0f13617faa.mockapi.io/cart', obj);
+        setCartCardsArr((prev) => [...prev, data]);
+      }
+    } catch {
+      alert('Не удалось удалить товар!');
+    }
+
   }
 
   const onChangeInputValue = (event) => {
@@ -65,7 +77,7 @@ function App() {
 
     <Routes>
       <Route path="/" element={
-        <Home searchValue={searchValue} setSearcValue={setSearcValue} onChangeInputValue={onChangeInputValue} cardsArr={cardsArr} onAddToCart={onAddToCart} onAddToLiked={(obj) => onAddToLiked(obj)} />
+        <Home searchValue={searchValue} setSearcValue={setSearcValue} onChangeInputValue={onChangeInputValue} cardsArr={cardsArr} onAddToCart={(obj) => onAddToCart(obj)} onAddToLiked={(obj) => onAddToLiked(obj)} cartCardsArr={cartCardsArr} />
       } />
       <Route path="/favorites" element={
         <Favorite item={likedCardsArr} onAddToLiked={onAddToLiked} />
