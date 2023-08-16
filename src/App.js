@@ -12,6 +12,7 @@ function App() {
   const [likedCardsArr, setLikedCardsArr] = React.useState([]);
   const [searchValue, setSearcValue] = React.useState('');
   const [cartState, setCartState] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
 
@@ -19,8 +20,10 @@ function App() {
 
       const cartCards = await axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/cart');
       const likedCards = await axios.get('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite');
+      setIsLoading(false);
       const cards = await axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/items');
 
+      console.log('LoadingIsFalse')
       setCardsArr(cards.data);
       setCartCardsArr(cartCards.data);
       setLikedCardsArr(likedCards.data);
@@ -70,17 +73,24 @@ function App() {
   }
 
   return <div className="wrapper">
-
-
     <Header onCartClick={() => setCartState(true)} />
     {cartState && <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} onRemove={onRemoveItems} />}
 
     <Routes>
       <Route path="/" element={
-        <Home searchValue={searchValue} setSearcValue={setSearcValue} onChangeInputValue={onChangeInputValue} cardsArr={cardsArr} onAddToCart={(obj) => onAddToCart(obj)} onAddToLiked={(obj) => onAddToLiked(obj)} cartCardsArr={cartCardsArr} />
+        <Home
+          searchValue={searchValue}
+          setSearcValue={setSearcValue}
+          onChangeInputValue={onChangeInputValue}
+          cardsArr={cardsArr}
+          onAddToCart={(obj) => onAddToCart(obj)}
+          onAddToLiked={(obj) => onAddToLiked(obj)}
+          cartCardsArr={cartCardsArr}
+          isLoading={isLoading} />
       } />
       <Route path="/favorites" element={
-        <Favorite item={likedCardsArr} onAddToLiked={onAddToLiked} />
+        <Favorite item={likedCardsArr}
+          onAddToLiked={onAddToLiked} />
       } />
     </Routes>
   </div>;
