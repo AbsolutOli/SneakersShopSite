@@ -1,13 +1,19 @@
+import React from 'react';
 import Card from '../components/Card';
+import AppContext from '../context';
 
-function Favorite({ item, onAddToLiked }) {
+function Favorite() {
+    const { likedCardsArr, onAddToLiked } = React.useContext(AppContext);
+
     return <div className="content">
+
+
         <div className="search-sneakers-block">
             <h1>Мои закладки</h1>
         </div>
 
         <div className="sneakers">
-            {item.map((card, index) => (
+            {likedCardsArr.map((card, index) => (
                 <Card
                     key={index}
                     liked={true}

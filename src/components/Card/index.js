@@ -1,17 +1,16 @@
 import React from 'react';
 import ContentLoader from "react-content-loader";
 import styles from './Card.module.scss';
+import AppContext from '../../context';
 
-function Card({ id, image, title, price, onPlus, onLike, liked = false, added = false, loading = false }) {
+function Card({ id, image, title, price, onPlus, onLike, liked = false, loading = false }) {
 
-    console.log(`Znachenie ${added}`)
+    const { isCardAdded } = React.useContext(AppContext);
 
-    const [isAdded, setIsAdded] = React.useState(added);
     const [isLiked, setIsLiked] = React.useState(liked);
 
     const onClickPlus = () => {
         onPlus({ id, image, title, price });
-        setIsAdded(!isAdded);
     }
 
     const onClickLike = () => {
@@ -57,7 +56,7 @@ function Card({ id, image, title, price, onPlus, onLike, liked = false, added = 
                         <b>{price} грн.</b>
                     </div>
                     <button onClick={onClickPlus}>
-                        <img width={32} height={32} src={isAdded ? "/img/plus-green.svg" : "/img/plus.svg"} alt="Plus Icon" />
+                        <img width={32} height={32} src={isCardAdded(id) ? "/img/plus-green.svg" : "/img/plus.svg"} alt="Plus Icon" />
                     </button>
                 </div>
             </>

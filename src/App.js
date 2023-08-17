@@ -5,6 +5,8 @@ import SidePanel from './components/SidePanel';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Favorite from './pages/Favorite';
+import AppContext from './context';
+
 
 function App() {
   const [cardsArr, setCardsArr] = React.useState([]);
@@ -23,7 +25,6 @@ function App() {
       setIsLoading(false);
       const cards = await axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/items');
 
-      console.log('LoadingIsFalse')
       setCardsArr(cards.data);
       setCartCardsArr(cartCards.data);
       setLikedCardsArr(likedCards.data);
@@ -72,28 +73,33 @@ function App() {
     setSearcValue(event.target.value);
   }
 
-  return <div className="wrapper">
-    <Header onCartClick={() => setCartState(true)} />
-    {cartState && <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} onRemove={onRemoveItems} />}
+  const isCardAdded = (id) => {
+    return cartCardsArr.some((obj) => obj.id === id);
+  }
 
-    <Routes>
-      <Route path="/" element={
-        <Home
-          searchValue={searchValue}
-          setSearcValue={setSearcValue}
-          onChangeInputValue={onChangeInputValue}
-          cardsArr={cardsArr}
-          onAddToCart={(obj) => onAddToCart(obj)}
-          onAddToLiked={(obj) => onAddToLiked(obj)}
-          cartCardsArr={cartCardsArr}
-          isLoading={isLoading} />
-      } />
-      <Route path="/favorites" element={
-        <Favorite item={likedCardsArr}
-          onAddToLiked={onAddToLiked} />
-      } />
-    </Routes>
-  </div>;
+  return <AppContext.Provider value={{ cardsArr, cartCardsArr, likedCardsArr, isCardAdded, onAddToLiked }}>
+    <div className="wrapper">
+      <Header onCartClick={() => setCartState(true)} />
+      {cartState && <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} onRemove={onRemoveItems} />}
+
+      <Routes>
+        <Route path="/" element={
+          <Home
+            searchValue={searchValue}
+            setSearcValue={setSearcValue}
+            onChangeInputValue={onChangeInputValue}
+            cardsArr={cardsArr}
+            onAddToCart={(obj) => onAddToCart(obj)}
+            onAddToLiked={(obj) => onAddToLiked(obj)}
+            cartCardsArr={cartCardsArr}
+            isLoading={isLoading} />
+        } />
+        <Route path="/favorites" element={
+          <Favorite onAddToLiked={onAddToLiked} />
+        } />
+      </Routes>
+    </div>;
+  </AppContext.Provider>
 }
 
 export default App;

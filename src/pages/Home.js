@@ -1,3 +1,4 @@
+import React from 'react';
 import Card from '../components/Card';
 
 function Home({ searchValue,
@@ -10,7 +11,6 @@ function Home({ searchValue,
     isLoading }) {
 
     const renderRealItems = () => {
-        console.log('REnder card')
 
         const filteredItems = cardsArr.filter((item) =>
             item.title.toLowerCase().includes(searchValue.toLowerCase()));
@@ -22,13 +22,11 @@ function Home({ searchValue,
                 onLike={(obj) => onAddToLiked(obj)}
                 cartCardsArr={cartCardsArr}
                 loading={isLoading}
-                added={cartCardsArr.some((obj) => obj.id === card.id)}
                 {...card} />
         ))
     }
 
     const renderFakeItems = () => {
-        console.log('REnder fake card')
         return [...Array(10)].map((card, index) => (
             <Card
                 key={index}
