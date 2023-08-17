@@ -55,7 +55,6 @@ function App() {
 
   const onAddToCart = async (obj) => {
     try {
-      console.log(obj)
       if (cartCardsArr.find((card) => Number(card.id) === Number(obj.id))) {
         axios.delete(`https://64d608f7754d3e0f13617faa.mockapi.io/cart/${obj.id}`);
         setCartCardsArr((prev) => prev.filter((card) => card.id !== obj.id));
@@ -77,7 +76,7 @@ function App() {
     return cartCardsArr.some((obj) => obj.id === id);
   }
 
-  return <AppContext.Provider value={{ cardsArr, cartCardsArr, likedCardsArr, isCardAdded, onAddToLiked }}>
+  return <AppContext.Provider value={{ cardsArr, cartCardsArr, likedCardsArr, isCardAdded, onAddToLiked, setCartState }}>
     <div className="wrapper">
       <Header onCartClick={() => setCartState(true)} />
       {cartState && <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} onRemove={onRemoveItems} />}

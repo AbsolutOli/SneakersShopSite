@@ -1,3 +1,5 @@
+import Info from './Info';
+
 function SidePanel({ onClose, items = [], onRemove }) {
     return <div className="side-panel">
         <div className="panel">
@@ -49,19 +51,10 @@ function SidePanel({ onClose, items = [], onRemove }) {
                             <img src="/img/arrowRight.svg" alt="Arrow Icon" />
                         </div>
                     </button>
-                </div> : <div className="empty_cart">
-                    <img className="empty_cart_image" width={120} height={120} src="/img/emptycart.png" alt="Empty Cart" />
-                    <div className="text">
-                        <h5>Корзина пустая</h5>
-                        <p>Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.</p>
-                    </div>
-                    <button onClick={onClose} className="btnBack GreenBtn">
-                        <div className="btnContent">
-                            <img src="/img/arrowRight.svg" alt="Arrow Icon" />
-                            <p>Вернуться назад</p>
-                        </div>
-                    </button>
-                </div>}
+                </div> : <Info
+                    image='/img/emptycart.png'
+                    title='Корзина пустая'
+                    text='Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.' />}
         </div>
     </div >
 }
