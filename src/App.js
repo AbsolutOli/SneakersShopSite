@@ -76,7 +76,7 @@ function App() {
     return cartCardsArr.some((obj) => obj.id === id);
   }
 
-  return <AppContext.Provider value={{ cardsArr, cartCardsArr, likedCardsArr, isCardAdded, onAddToLiked, setCartState }}>
+  return <AppContext.Provider value={{ cardsArr, cartCardsArr, likedCardsArr, isCardAdded, onAddToLiked, setCartState, setCartCardsArr }}>
     <div className="wrapper">
       <Header onCartClick={() => setCartState(true)} />
       {cartState && <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} onRemove={onRemoveItems} />}

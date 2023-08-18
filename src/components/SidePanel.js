@@ -1,6 +1,16 @@
+import React from 'react';
 import Info from './Info';
+import AppContext from '../context';
 
 function SidePanel({ onClose, items = [], onRemove }) {
+    const { setCartCardsArr } = React.useContext(AppContext);
+    const [isOrderComplete, setIsOrderComplete] = React.useState(false);
+
+    const onClickOrder = () => {
+        setIsOrderComplete((prev) => prev = true)
+        setCartCardsArr([]);
+    }
+
     return <div className="side-panel">
         <div className="panel">
             <div className="side-panel-head">
@@ -45,16 +55,16 @@ function SidePanel({ onClose, items = [], onRemove }) {
                             <b>42.90 грн.</b>
                         </div>
                     </div>
-                    <button className="btnOrder GreenBtn">
+                    <button onClick={onClickOrder} className="btnOrder GreenBtn">
                         <div className="btnContent">
                             <p>Оформить заказ</p>
                             <img src="/img/arrowRight.svg" alt="Arrow Icon" />
                         </div>
                     </button>
                 </div> : <Info
-                    image='/img/emptycart.png'
-                    title='Корзина пустая'
-                    text='Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.' />}
+                    image={isOrderComplete ? '/img/ordercomplete.svg' : '/img/emptycart.png'}
+                    title={isOrderComplete ? 'Заказ оформлен!' : 'Корзина пустая'}
+                    text={isOrderComplete ? 'Ваш заказ #18 скоро будет передан курьерской доставке' : 'Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.'} />}
         </div>
     </div >
 }
