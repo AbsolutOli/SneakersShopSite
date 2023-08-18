@@ -145,6 +145,15 @@ header {
       align-items: center;
       transition: all 0.3s ease;
 
+      &:disabled {
+        background: #353535;
+        cursor: wait;
+      }
+
+      &:hover:disabled {
+        background: #353535;
+      }
+
       &:hover {
         background: #86b74b;
       }

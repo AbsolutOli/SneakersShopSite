@@ -1,14 +1,33 @@
 import React from 'react';
+import axios from 'axios';
 import Info from './Info';
 import AppContext from '../context';
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function SidePanel({ onClose, items = [], onRemove }) {
     const { setCartCardsArr } = React.useContext(AppContext);
     const [isOrderComplete, setIsOrderComplete] = React.useState(false);
+    const [orderId, setOrderId] = React.useState('');
+    const [loadingOrder, setLoadingOrder] = React.useState(false);
 
-    const onClickOrder = () => {
-        setIsOrderComplete((prev) => prev = true)
-        setCartCardsArr([]);
+    const onClickOrder = async () => {
+        setLoadingOrder(true);
+        try {
+            const { data } = await axios.post('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/orders', {
+                items
+            })
+            setOrderId(data.id);
+            for (let i = 0; i < items.length; i++) {
+                await axios.delete(`https://64d608f7754d3e0f13617faa.mockapi.io/cart/${items[i].id}`)
+                await delay;
+            }
+            setIsOrderComplete((prev) => prev = true);
+            setCartCardsArr([]);
+        } catch {
+            alert('Не удалось обработать заказ!');
+        }
+        setLoadingOrder(false);
     }
 
     return <div className="side-panel">
@@ -55,7 +74,7 @@ function SidePanel({ onClose, items = [], onRemove }) {
                             <b>42.90 грн.</b>
                         </div>
                     </div>
-                    <button onClick={onClickOrder} className="btnOrder GreenBtn">
+                    <button disabled={loadingOrder} onClick={onClickOrder} className="btnOrder GreenBtn">
                         <div className="btnContent">
                             <p>Оформить заказ</p>
                             <img src="/img/arrowRight.svg" alt="Arrow Icon" />
@@ -64,7 +83,7 @@ function SidePanel({ onClose, items = [], onRemove }) {
                 </div> : <Info
                     image={isOrderComplete ? '/img/ordercomplete.svg' : '/img/emptycart.png'}
                     title={isOrderComplete ? 'Заказ оформлен!' : 'Корзина пустая'}
-                    text={isOrderComplete ? 'Ваш заказ #18 скоро будет передан курьерской доставке' : 'Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.'} />}
+                    text={isOrderComplete ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке` : 'Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.'} />}
         </div>
     </div >
 }
