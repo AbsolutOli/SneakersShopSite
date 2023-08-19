@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Favorite from './pages/Favorite';
 import AppContext from './context';
+import Orders from './pages/Orders';
 
 
 function App() {
@@ -93,8 +94,13 @@ function App() {
             cartCardsArr={cartCardsArr}
             isLoading={isLoading} />
         } />
+
         <Route path="/favorites" element={
           <Favorite onAddToLiked={onAddToLiked} />
+        } />
+
+        <Route path="/orders" element={
+          <Orders />
         } />
       </Routes>
     </div>;
