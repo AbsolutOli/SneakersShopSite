@@ -1,15 +1,18 @@
 import React from 'react';
 import axios from 'axios';
 import Info from './Info';
-import AppContext from '../context';
+import { useCart } from '../hooks/useCart';
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function SidePanel({ onClose, items = [], onRemove }) {
-    const { setCartCardsArr } = React.useContext(AppContext);
+
+    const { setCartCardsArr, totalPrice } = useCart();
     const [isOrderComplete, setIsOrderComplete] = React.useState(false);
     const [orderId, setOrderId] = React.useState('');
     const [loadingOrder, setLoadingOrder] = React.useState(false);
+
+
 
     const onClickOrder = async () => {
         setLoadingOrder(true);
@@ -66,12 +69,12 @@ function SidePanel({ onClose, items = [], onRemove }) {
                         <div className="price">
                             <p>Итого: </p>
                             <span></span>
-                            <b>5199.60 грн.</b>
+                            <b>{Number(totalPrice).toFixed(2)} грн.</b>
                         </div>
                         <div className="price">
                             <p>Налог 5%: </p>
                             <span></span>
-                            <b>42.90 грн.</b>
+                            <b>{Number(totalPrice * 0.05).toFixed(2)} грн.</b>
                         </div>
                     </div>
                     <button disabled={loadingOrder} onClick={onClickOrder} className="btnOrder GreenBtn">
