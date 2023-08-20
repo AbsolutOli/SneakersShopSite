@@ -20,19 +20,22 @@ function App() {
   React.useEffect(() => {
 
     async function getResponse() {
+      try {
+        const cartCards = await axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/cart');
+        const likedCards = await axios.get('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite');
+        setIsLoading(false);
+        const cards = await axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/items');
 
-      const cartCards = await axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/cart');
-      const likedCards = await axios.get('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite');
-      setIsLoading(false);
-      const cards = await axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/items');
-
-      setCardsArr(cards.data);
-      setCartCardsArr(cartCards.data);
-      setLikedCardsArr(likedCards.data);
+        setCardsArr(cards.data);
+        setCartCardsArr(cartCards.data);
+        setLikedCardsArr(likedCards.data);
+      } catch (error) {
+        alert('Не удалось получить данные с сервера ;(');
+        console.error(error);
+      }
     }
 
     getResponse();
-
   }, [])
 
   const onAddToLiked = async (obj) => {
@@ -50,8 +53,13 @@ function App() {
   }
 
   const onRemoveItems = (id) => {
-    axios.delete(`https://64d608f7754d3e0f13617faa.mockapi.io/cart/${id}`);
-    setCartCardsArr((prev) => prev.filter(item => item.id !== id));
+    try {
+      axios.delete(`https://64d608f7754d3e0f13617faa.mockapi.io/cart/${id}`);
+      setCartCardsArr((prev) => prev.filter(item => item.id !== id));
+    } catch (error) {
+      alert('Не удалось удалить товар');
+      console.error(error);
+    }
   }
 
   const onAddToCart = async (obj) => {
@@ -63,8 +71,9 @@ function App() {
         const { data } = await axios.post('https://64d608f7754d3e0f13617faa.mockapi.io/cart', obj);
         setCartCardsArr((prev) => [...prev, data]);
       }
-    } catch {
-      alert('Не удалось удалить товар!');
+    } catch (error) {
+      alert('Не удалось добавить/удалить товар!');
+      console.error(error);
     }
 
   }
