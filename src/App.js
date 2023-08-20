@@ -119,7 +119,7 @@ function App() {
         } />
 
         <Route path="/favorites" element={
-          <Favorite onAddToLiked={onAddToLiked} />
+          <Favorite isLoading={isLoading} />
         } />
 
         <Route path="/orders" element={

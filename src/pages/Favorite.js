@@ -2,7 +2,7 @@ import React from 'react';
 import Card from '../components/Card';
 import AppContext from '../context';
 
-function Favorite() {
+function Favorite({ isLoading }) {
     const { likedCardsArr, onAddToLiked } = React.useContext(AppContext);
     return <div className="content">
 
@@ -11,10 +11,11 @@ function Favorite() {
         </div>
 
         <div className="sneakers">
-            {likedCardsArr.map((card, index) => (
+            {(isLoading ? [...Array(8)] : likedCardsArr).map((card, index) => (
                 <Card
                     key={index}
                     onLike={(obj) => onAddToLiked(obj)}
+                    loading={isLoading}
                     {...card} />
             ))}
         </div>
