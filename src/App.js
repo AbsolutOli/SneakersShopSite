@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Route, Routes } from 'react-router-dom'
-import SidePanel from './components/SidePanel';
+import SidePanel from './components/SidePanel/SidePanel';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Favorite from './pages/Favorite';
@@ -80,7 +80,7 @@ function App() {
   return <AppContext.Provider value={{ cardsArr, cartCardsArr, likedCardsArr, isCardAdded, onAddToLiked, setCartState, setCartCardsArr }}>
     <div className="wrapper">
       <Header onCartClick={() => setCartState(true)} />
-      {cartState && <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} onRemove={onRemoveItems} />}
+      <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} onRemove={onRemoveItems} cartState={cartState} />
 
       <Routes>
         <Route path="/" element={

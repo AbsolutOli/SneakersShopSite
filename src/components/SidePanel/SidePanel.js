@@ -1,11 +1,14 @@
 import React from 'react';
 import axios from 'axios';
-import Info from './Info';
-import { useCart } from '../hooks/useCart';
+
+import Info from '../Info';
+import { useCart } from '../../hooks/useCart';
+
+import styles from './SidePanel.module.scss'
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function SidePanel({ onClose, items = [], onRemove }) {
+function SidePanel({ onClose, items = [], onRemove, cartState }) {
 
     const { setCartCardsArr, totalPrice } = useCart();
     const [isOrderComplete, setIsOrderComplete] = React.useState(false);
@@ -33,11 +36,11 @@ function SidePanel({ onClose, items = [], onRemove }) {
         setLoadingOrder(false);
     }
 
-    return <div className="side-panel">
-        <div className="panel">
-            <div className="side-panel-head">
+    return <div className={`${styles.side_panel} ${cartState && styles.side_panel_visible}`}>
+        <div className={styles.panel}>
+            <div className={styles.side_panel_head}>
                 <h3>Корзина</h3>
-                <button className="closeBtn" onClick={onClose}>
+                <button className={styles.closeBtn} onClick={onClose}>
                     <svg width={32} height={32} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="0.5" y="0.5" width="31" height="31" rx="7.5" fill="white" stroke="#DBDBDB" />
                         <path d="M20.0799 18.6155L17.6311 16.1667L20.0798 13.718C21.0241 12.7738 19.5596 11.3093 18.6154 12.2536L16.1667 14.7023L13.7179 12.2535C12.7738 11.3095 11.3095 12.7738 12.2535 13.7179L14.7023 16.1667L12.2536 18.6154C11.3093 19.5596 12.7738 21.0241 13.718 20.0798L16.1667 17.6311L18.6155 20.0799C19.5597 21.0241 21.0241 19.5597 20.0799 18.6155Z" fill="#B5B5B5" />
@@ -45,18 +48,18 @@ function SidePanel({ onClose, items = [], onRemove }) {
                 </button>
             </div>
             {items.length > 0 ?
-                <div className="full_cart">
-                    <div className="cart-items">
+                <div className={styles.full_cart}>
+                    <div className={styles.cart_items}>
                         {items.map((obj) => (
-                            <div key={obj.id} className="cart-item" >
-                                <div className="cart-item-image">
+                            <div key={obj.id} className={styles.cart_item} >
+                                <div className={styles.cart_item_image}>
                                     <img src={obj.image} alt="Sneakers 1" />
                                 </div>
-                                <div className="cart-item__info">
+                                <div className={styles.cart_item__info}>
                                     <p>{obj.title}</p>
                                     <b>{obj.price} грн.</b>
                                 </div>
-                                <button onClick={() => onRemove(obj.id)} className="closeBtn">
+                                <button onClick={() => onRemove(obj.id)} className={styles.closeBtn} s>
                                     <svg width={32} height={32} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect x="0.5" y="0.5" width="31" height="31" rx="7.5" fill="white" stroke="#DBDBDB" />
                                         <path d="M20.0799 18.6155L17.6311 16.1667L20.0798 13.718C21.0241 12.7738 19.5596 11.3093 18.6154 12.2536L16.1667 14.7023L13.7179 12.2535C12.7738 11.3095 11.3095 12.7738 12.2535 13.7179L14.7023 16.1667L12.2536 18.6154C11.3093 19.5596 12.7738 21.0241 13.718 20.0798L16.1667 17.6311L18.6155 20.0799C19.5597 21.0241 21.0241 19.5597 20.0799 18.6155Z" fill="#B5B5B5" />
@@ -65,20 +68,20 @@ function SidePanel({ onClose, items = [], onRemove }) {
                             </div>
                         ))}
                     </div>
-                    <div className="cart-prices">
-                        <div className="price">
+                    <div className={styles.cart_prices}>
+                        <div className={styles.price}>
                             <p>Итого: </p>
                             <span></span>
                             <b>{Number(totalPrice).toFixed(2)} грн.</b>
                         </div>
-                        <div className="price">
+                        <div className={styles.price}>
                             <p>Налог 5%: </p>
                             <span></span>
                             <b>{Number(totalPrice * 0.05).toFixed(2)} грн.</b>
                         </div>
                     </div>
-                    <button disabled={loadingOrder} onClick={onClickOrder} className="btnOrder GreenBtn">
-                        <div className="btnContent">
+                    <button disabled={loadingOrder} onClick={onClickOrder} className={`${styles.btnOrder} ${styles.GreenBtn}`}>
+                        <div className={styles.btnContent}>
                             <p>Оформить заказ</p>
                             <img src="/img/arrowRight.svg" alt="Arrow Icon" />
                         </div>
