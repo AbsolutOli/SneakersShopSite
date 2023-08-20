@@ -11,16 +11,15 @@ function Home({ searchValue,
     isLoading }) {
 
     const renderRealItems = () => {
-
         const filteredItems = cardsArr.filter((item) =>
             item.title.toLowerCase().includes(searchValue.toLowerCase()));
 
         return filteredItems.map((card, index) => (
             <Card
                 key={index}
+                parentId={card.id}
                 onPlus={(obj) => onAddToCart(obj)}
                 onLike={(obj) => onAddToLiked(obj)}
-                cartCardsArr={cartCardsArr}
                 loading={isLoading}
                 {...card} />
         ))

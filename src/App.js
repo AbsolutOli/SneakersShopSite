@@ -45,10 +45,13 @@ function App() {
   }, [])
 
   const onAddToLiked = async (obj) => {
+    console.log(obj)
+    console.log(likedCardsArr)
     try {
-      if (likedCardsArr.find((card) => card.id === obj.id)) {
-        axios.delete(`https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite/${obj.id}`);
-        setLikedCardsArr((prev) => prev.filter((card) => card.id !== obj.id));
+      if (likedCardsArr.find((card) => card.parentId === obj.parentId)) {
+        const [currentItem] = likedCardsArr.filter((card) => card.parentId === obj.parentId);
+        axios.delete(`https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite/${currentItem.id}`);
+        setLikedCardsArr((prev) => prev.filter((card) => card.parentId !== obj.parentId));
       } else {
         const { data } = await axios.post('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite', obj);
         setLikedCardsArr((prev) => [...prev, data]);
@@ -70,9 +73,10 @@ function App() {
 
   const onAddToCart = async (obj) => {
     try {
-      if (cartCardsArr.find((card) => Number(card.id) === Number(obj.id))) {
-        axios.delete(`https://64d608f7754d3e0f13617faa.mockapi.io/cart/${obj.id}`);
-        setCartCardsArr((prev) => prev.filter((card) => card.id !== obj.id));
+      if (cartCardsArr.find((card) => Number(card.parentId) === Number(obj.parentId))) {
+        const [currentItem] = cartCardsArr.filter((card) => card.parentId === obj.parentId);
+        axios.delete(`https://64d608f7754d3e0f13617faa.mockapi.io/cart/${currentItem.id}`);
+        setCartCardsArr((prev) => prev.filter((card) => card.parentId !== obj.id));
       } else {
         const { data } = await axios.post('https://64d608f7754d3e0f13617faa.mockapi.io/cart', obj);
         setCartCardsArr((prev) => [...prev, data]);
@@ -88,11 +92,15 @@ function App() {
     setSearcValue(event.target.value);
   }
 
-  const isCardAdded = (id) => {
-    return cartCardsArr.some((obj) => obj.id === id);
+  const isCardAdded = (pid) => {
+    return cartCardsArr.some((obj) => obj.parentId === pid);
   }
 
-  return <AppContext.Provider value={{ cardsArr, cartCardsArr, likedCardsArr, isCardAdded, onAddToLiked, setCartState, setCartCardsArr }}>
+  const isCardLiked = (pid) => {
+    return likedCardsArr.some((obj) => obj.parentId === pid);
+  }
+
+  return <AppContext.Provider value={{ cardsArr, cartCardsArr, likedCardsArr, isCardAdded, onAddToLiked, setCartState, setCartCardsArr, isCardLiked }}>
     <div className="wrapper">
       <Header onCartClick={() => setCartState(true)} />
       <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} onRemove={onRemoveItems} cartState={cartState} />

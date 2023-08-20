@@ -4,9 +4,7 @@ import AppContext from '../context';
 
 function Favorite() {
     const { likedCardsArr, onAddToLiked } = React.useContext(AppContext);
-
     return <div className="content">
-
 
         <div className="search-sneakers-block">
             <h1>Мои закладки</h1>
@@ -16,7 +14,6 @@ function Favorite() {
             {likedCardsArr.map((card, index) => (
                 <Card
                     key={index}
-                    liked={true}
                     onLike={(obj) => onAddToLiked(obj)}
                     {...card} />
             ))}
