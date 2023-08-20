@@ -21,10 +21,16 @@ function App() {
 
     async function getResponse() {
       try {
-        const cartCards = await axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/cart');
-        const likedCards = await axios.get('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite');
+        const [cartCards, likedCards, cards] = await Promise.all([
+          axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/cart'),
+          axios.get('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite'),
+          axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/items')
+        ])
+
+        //const cartCards = await axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/cart');
+        //const likedCards = await axios.get('https://64d8bbc85f9bf5b879ce81a8.mockapi.io/favorite');
         setIsLoading(false);
-        const cards = await axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/items');
+        //const cards = await axios.get('https://64d608f7754d3e0f13617faa.mockapi.io/items');
 
         setCardsArr(cards.data);
         setCartCardsArr(cartCards.data);
