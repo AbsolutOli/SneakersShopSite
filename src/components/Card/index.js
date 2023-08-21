@@ -32,7 +32,7 @@ function Card({ id, parentId, image, title, price, onPlus, onLike, loading = fal
                 <rect x="118" y="156" rx="8" ry="8" width="32" height="32" />
             </ContentLoader> : <>
                 <div className={styles.sneakers_images}>
-                    <img width={133} height={112} src={image} alt="Sneakers 1" />
+                    <img width={133} height={112} src={`/SneakersShopSite/${image}`} alt="Sneakers 1" />
                     {onLike && <div onClick={onClickLike}>
                         {
                             isCardLiked(parentId) ? <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -53,7 +53,7 @@ function Card({ id, parentId, image, title, price, onPlus, onLike, loading = fal
                         <b>{price} грн.</b>
                     </div>
                     {onPlus && <button onClick={onClickPlus}>
-                        <img width={32} height={32} src={isCardAdded(id) ? "img/plus-green.svg" : "img/plus.svg"} alt="Plus Icon" />
+                        <img width={32} height={32} src={isCardAdded(id) ? "/SneakersShopSite/img/plus-green.svg" : "/SneakersShopSite/img/plus.svg"} alt="Plus Icon" />
                     </button>}
                 </div>
             </>
