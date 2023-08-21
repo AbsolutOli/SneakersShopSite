@@ -118,11 +118,11 @@ function App() {
             isLoading={isLoading} />
         } />
 
-        <Route path="/favorites" element={
+        <Route path="/favorites/" element={
           <Favorite isLoading={isLoading} />
         } />
 
-        <Route path="/orders" element={
+        <Route path="/orders/" element={
           <Orders />
         } />
       </Routes>
