@@ -106,7 +106,7 @@ function App() {
       <SidePanel items={cartCardsArr} onClose={() => setCartState(false)} onRemove={onRemoveItems} cartState={cartState} />
 
       <Routes>
-        <Route path="/" element={
+        <Route path="SneakersShopSite/" element={
           <Home
             searchValue={searchValue}
             setSearcValue={setSearcValue}

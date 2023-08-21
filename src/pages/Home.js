@@ -7,7 +7,6 @@ function Home({ searchValue,
     cardsArr,
     onAddToCart,
     onAddToLiked,
-    cartCardsArr,
     isLoading }) {
 
     const renderRealItems = () => {
