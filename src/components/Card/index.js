@@ -53,7 +53,7 @@ function Card({ id, parentId, image, title, price, onPlus, onLike, loading = fal
                         <b>{price} грн.</b>
                     </div>
                     {onPlus && <button onClick={onClickPlus}>
-                        <img width={32} height={32} src={isCardAdded(id) ? "/img/plus-green.svg" : "/img/plus.svg"} alt="Plus Icon" />
+                        <img width={32} height={32} src={isCardAdded(id) ? "img/plus-green.svg" : "img/plus.svg"} alt="Plus Icon" />
                     </button>}
                 </div>
             </>

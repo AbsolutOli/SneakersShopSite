@@ -83,11 +83,11 @@ function SidePanel({ onClose, items = [], onRemove, cartState = false }) {
                     <button disabled={loadingOrder} onClick={onClickOrder} className={`${styles.btnOrder} ${styles.GreenBtn}`}>
                         <div className={styles.btnContent}>
                             <p>Оформить заказ</p>
-                            <img src="/img/arrowRight.svg" alt="Arrow Icon" />
+                            <img src="img/arrowRight.svg" alt="Arrow Icon" />
                         </div>
                     </button>
                 </div> : <Info
-                    image={isOrderComplete ? '/img/ordercomplete.svg' : '/img/emptycart.png'}
+                    image={isOrderComplete ? 'img/ordercomplete.svg' : 'img/emptycart.png'}
                     title={isOrderComplete ? 'Заказ оформлен!' : 'Корзина пустая'}
                     text={isOrderComplete ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке` : 'Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.'} />}
         </div>

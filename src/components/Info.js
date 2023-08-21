@@ -13,7 +13,7 @@ const Info = ({ image, title, text }) => {
             </div>
             <button onClick={() => setCartState(false)} className="btnBack GreenBtn">
                 <div className="btnContent">
-                    <img src="/img/arrowRight.svg" alt="Arrow Icon" />
+                    <img src="img/arrowRight.svg" alt="Arrow Icon" />
                     <p>Вернуться назад</p>
                 </div>
             </button>

@@ -37,7 +37,7 @@ function Home({ searchValue,
         <div className="search-sneakers-block">
             <h1>{searchValue ? `Результат поиска "${searchValue}"` : "Все кроссовки"}</h1>
             <div>
-                {searchValue ? <button onClick={() => (setSearcValue(''))}><img width={16} height={16} src="/img/cross.svg" alt="Close" /></button> : <img src="/img/search.svg" alt="Search Icon" />}
+                {searchValue ? <button onClick={() => (setSearcValue(''))}><img width={16} height={16} src="img/cross.svg" alt="Close" /></button> : <img src="img/search.svg" alt="Search Icon" />}
                 <input onChange={onChangeInputValue} placeholder="Поиск..." value={searchValue} />
             </div>
         </div>
